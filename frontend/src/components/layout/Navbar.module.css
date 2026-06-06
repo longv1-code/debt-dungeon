@@ -1,0 +1,84 @@
+.nav {
+    background: var(--color-bg-secondary);
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-6);
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-8);
+}
+
+.logo {
+    font-family: var(--font-game);
+    font-size: var(--text-xl);
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    text-shadow: 0 0 10px var(--color-primary-glow);
+    text-decoration: none;
+}
+
+.links {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-md);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    transition: all var(--transition-fast);
+    text-decoration: none;
+}
+
+.link:hover {
+    color: var(--color-text);
+    background: var(--color-bg-card);
+}
+
+.right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+.username {
+    font-size: var(--text-sm);
+    color: var(--color-gold);
+    font-weight: 600;
+}
+
+.logoutBtn {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-md);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    transition: all var(--transition-fast);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.logoutBtn:hover {
+    color: var(--color-error);
+    background: rgba(239, 68, 68, 0.1);
+}
