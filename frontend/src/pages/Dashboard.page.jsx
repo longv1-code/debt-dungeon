@@ -28,7 +28,7 @@ const DashboardPage = () => {
 
   // Derived stats -- calculated from debts array
   const totalBalance = debts.reduce((sum, debt) => sum + debt.currentBalance, 0)
-  const totalOriginal = debts.reduce((sum, debt) => sum + debt.originalBalance, 0)
+  const totalOriginal = debts.reduce((sum, debt) => sum + debt.originalAmount, 0)
   const totalPaid = totalOriginal - totalBalance
   const activeBosses = debts.filter((debt) => debt.currentBalance > 0).length
   const defeatBosses = debts.filter((debt) => debt.currentBalance === 0).length

@@ -72,7 +72,7 @@ const BossCard = ({ debt, onPayment, onDelete }) => {
                     <button className={styles.damageBtn} onClick={() => onPayment(debt)}>
                         <Sword size={14} /> Deal Damage
                     </button>
-                    <button classname={styles.viewBtn} onClick={() => navigate(ROUTES.BOSS(debt.id))}>
+                    <button className={styles.viewBtn} onClick={() => navigate(ROUTES.BOSS(debt.id))}>
                         View
                     </button>
                     <button className={styles.deletedBtn} onClick={() => onDelete(debt.id)}>
