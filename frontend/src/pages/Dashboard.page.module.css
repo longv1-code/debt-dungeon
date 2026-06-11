@@ -1,0 +1,113 @@
+.page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.main {
+    flex: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--space-8) var(--space-6);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+}
+
+/* Stats Bar */
+.statsBar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-4);
+}
+
+.statCard {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-5) var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.statLabel {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--color-text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.statValue {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    font-family: var(--font-game);
+    color: var(--color-text);
+}
+
+.paid    { color: var(--color-success) !important; }
+.danger  { color: var(--color-hp) !important; }
+.success { color: var(--color-success) !important; }
+
+/* Main Content Layout */
+.content {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: var(--space-8);
+    align-items: start;
+}
+
+/* Chart Section */
+.chartSection {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.chartCard {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+}
+
+/* Boss Section */
+.bossSection {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.sectionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sectionHeader h2 {
+    font-size: var(--text-2xl);
+    color: var(--color-text);
+}
+
+.bossGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-4);
+}
+
+/* Empty State */
+.empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-16);
+    color: var(--color-text-muted);
+    background: var(--color-bg-card);
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-xl);
+    text-align: center;
+}
