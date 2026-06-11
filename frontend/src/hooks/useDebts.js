@@ -4,7 +4,7 @@ import { createPayment } from '../api/payments.api.js'
 
 const useDebts = () => {
     const [debts, setDebts] = useState([])
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
 
     const fetchDebts = async() => {
