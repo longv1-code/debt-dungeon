@@ -1,0 +1,12 @@
+.container {
+    width: 100%;
+    padding: var(--space-2);
+}
+
+.empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    color: var(--color-text-muted);
+}

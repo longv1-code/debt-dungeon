@@ -5,7 +5,7 @@ import { getPayments } from '../api/payments.api.js'
 const usePayments = (debtId) => {
     const [debt, setDebt] = useState(null)
     const [payments, setPayments] = useState([])
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
 
     const fetchData = async () => {
