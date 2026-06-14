@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;500;600;700&display=swap');
 
 body {
   font-family: var(--font-body);
@@ -7,14 +7,15 @@ body {
 
 h1, h2, h3 {
   font-family: var(--font-game);
-  font-weight: 700;
-  line-height: 1.2;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0.05em;
 }
 
-h1 { font-size: var(--text-4xl); }
-h2 { font-size: var(--text-3xl); }
-h3 { font-size: var(--text-2xl); }
-h4 { font-size: var(--text-xl); font-family: var(--font-body); }
+h1 { font-size: var(--text-2xl); }
+h2 { font-size: var(--text-xl);  }
+h3 { font-size: var(--text-lg);  }
+h4 { font-size: var(--text-base); font-family: var(--font-body); font-weight: 700; }
 
-p     { font-size: var(--text-base); }
+p     { font-size: var(--text-base); line-height: 1.6; }
 small { font-size: var(--text-sm); color: var(--color-text-muted); }
