@@ -106,6 +106,12 @@ const BossSprite = ({ debtType, animation = 'idle', scale = 3, onAnimationEnd })
                         onAnimationEnd?.()
                         return prev
                     }
+                    // For hit and attack -- play once then singal end
+                    if (animation === 'hit' || animation == 'attack') {
+                        clearInterval(intervalRef.current)
+                        onAnimationEnd?.()
+                        return 0
+                    }
                     // For all others -- loop back to start
                     return 0
                 }
