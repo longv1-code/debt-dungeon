@@ -21,8 +21,6 @@ import styles from './BossDetail.page.module.css'
 const ATTACK_INTERVAL = 8000
 
 function BossDetailPage() {
-  useAuth()
-
   const { id } = useParams()
   const navigate = useNavigate()
   const { debt, payments, loading, error, refresh } = usePayments(parseInt(id))

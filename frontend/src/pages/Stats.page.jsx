@@ -8,8 +8,6 @@ import { formatCurrency } from '../utils/currency.utils'
 import styles from './Stats.page.module.css'
 
 const StatsPage = () => {
-    useAuth()
-
     const { stats, loading, error } = useStats()
 
     if (loading) return <LoadingSpinner />

@@ -15,9 +15,6 @@ import styles from './Dashboard.page.module.css'
 import { useEffect } from 'react'
 
 const DashboardPage = () => {
-  // Protects this page -- redirects if not logged in
-  useAuth()
-
   const { debts, loading, addDebt, removeDebt, logPayment } = useDebts()
 
   // Modal state
