@@ -10,7 +10,9 @@ import Button from '../components/ui/Button'
 import useDebts from '../hooks/useDebts'
 import useAuth from '../hooks/useAuth'
 import { formatCurrency } from '../utils/currency.utils'
+import { preloadBossSpriteSet } from '../utils/spritePreload.utils'
 import styles from './Dashboard.page.module.css'
+import { useEffect } from 'react'
 
 const DashboardPage = () => {
   // Protects this page -- redirects if not logged in
@@ -32,6 +34,10 @@ const DashboardPage = () => {
   const totalPaid = totalOriginal - totalBalance
   const activeBosses = debts.filter((debt) => debt.currentBalance > 0).length
   const defeatBosses = debts.filter((debt) => debt.currentBalance === 0).length
+
+  useEffect(() => {
+    preloadBossSpriteSet(debts.map((debt) => debt.type))
+  }, [debts])
 
   // Called by AddDebtModal with the form data when user hits Spawn Boss
   const handleAddDebt = async (debtData) => {

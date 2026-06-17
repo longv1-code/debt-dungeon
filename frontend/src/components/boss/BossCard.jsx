@@ -6,6 +6,7 @@ import { DEBT_CATEGORIES } from '../../data/debtCategories.js'
 import { ROUTES } from '../../constants/routes.constants.js'
 import { formatCurrency } from '../../utils/currency.utils.js'
 import { getBossStatus } from '../../utils/damage.utils.js'
+import { preloadBossSpriteAssets } from '../../utils/spritePreload.utils.js'
 import styles from './BossCard.module.css'
 
 const BossCard = ({ debt, onPayment, onDelete }) => {
@@ -23,6 +24,8 @@ const BossCard = ({ debt, onPayment, onDelete }) => {
         <div
             className={`${styles.card} ${isDefeated ? styles.statusDefeated : ''}`}
             style={{ '--boss-color': category.color}}
+            onMouseEnter={() => preloadBossSpriteAssets(debt.type)}
+            onFocusCapture={() => preloadBossSpriteAssets(debt.type)}
         >
             {/* Header -- boss sprite, name, type, status badge */}
             <div className={styles.header}>

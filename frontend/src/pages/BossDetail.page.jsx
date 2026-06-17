@@ -13,6 +13,7 @@ import { BOSS_TYPES } from '../data/bossTypes'
 import { DEBT_CATEGORIES } from '../data/debtCategories'
 import { formatCurrency } from '../utils/currency.utils'
 import { formatDate } from '../utils/date.utils'
+import { preloadBossSpriteAssets } from '../utils/spritePreload.utils'
 import { ROUTES } from '../constants/routes.constants'
 import styles from './BossDetail.page.module.css'
 
@@ -49,8 +50,10 @@ function BossDetailPage() {
   useEffect(() => {
     if (!debt || isDefeated) return
 
-    // Initial attack on page load
-    setAnimation('attack')
+    // Initial attack on page load, deferred so the effect only schedules work
+    const initialAttackTimeout = setTimeout(() => {
+      setAnimation('attack')
+    }, 0)
 
     // Random attacks at fixed interval
     attackIntervalRef.current = setInterval(() => {
@@ -59,11 +62,18 @@ function BossDetailPage() {
 
     // Cleanup when leaving page
     return () => {
+      clearTimeout(initialAttackTimeout)
       if (attackIntervalRef.current) {
         clearInterval(attackIntervalRef.current)
       }
     }
   }, [debt, isDefeated])
+
+  // Preloads sprite images as soon as the debt type is known
+  useEffect(() => {
+    if (!debt) return
+    preloadBossSpriteAssets(debt.type)
+  }, [debt])
 
   const handlePayment = async (debtId, paymentData) => {
     const result = await createPayment(debtId, paymentData)
@@ -136,9 +146,9 @@ function BossDetailPage() {
             </div>
           )}
           <BossSprite
+            key={`${debt.type}-${defeated ? 'death' : animation}`}
             debtType={debt.type}
             animation={defeated ? 'death' : animation}
-            scale={4}
             onAnimationEnd={handleAnimationEnd}
           />
         </div>

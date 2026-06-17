@@ -1,13 +1,15 @@
 .wrapper {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
-    /* Extra padding to account for scaling overflow */
-    padding: var(--space-16);
+    min-height: 320px;
+    padding: var(--space-10) var(--space-12) 0;
+    overflow: visible;
 }
 
 .sprite {
     display: block;
     /* Prevent layout shift when sprite changes */
     flex-shrink: 0;
+    transform-origin: center bottom;
 }
