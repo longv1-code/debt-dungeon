@@ -48,9 +48,6 @@ const LandingPage = () => {
             {/* Hero */}
             <section className={styles.hero}>
                 <div className={styles.heroInner}>
-                    <div className={styles.heroBadge}>
-                        Free to start. No credit card required.
-                    </div>
                     <h1 className={styles.heroTitle}>
                         Your Debt is a<br />
                         <span className={styles.heroAccent}>Dungeon Boss.</span>
@@ -70,16 +67,19 @@ const LandingPage = () => {
                     </div>
                     <div className={styles.heroStats}>
                         <div className={styles.heroStat}>
+                            <Coins size={20} className={styles.heroStatIcon} />
                             <span className={styles.heroStatValue}>$0</span>
                             <span className={styles.heroStatLabel}>to get started</span>
                         </div>
                         <div className={styles.heroStatDivider} />
                         <div className={styles.heroStat}>
+                            <TrendingDown size={20} className={styles.heroStatIcon} />
                             <span className={styles.heroStatValue}>100%</span>
                             <span className={styles.heroStatLabel}>real debt tracking</span>
                         </div>
                         <div className={styles.heroStatDivider} />
                         <div className={styles.heroStat}>
+                            <Shield size={20} className={styles.heroStatIcon} />
                             <span className={styles.heroStatValue}>∞</span>
                             <span className={styles.heroStatLabel}>bosses to slay</span>
                         </div>
@@ -103,6 +103,31 @@ const LandingPage = () => {
                                 <h3 className={styles.featureTitle}>{feature.title}</h3>
                                 <p className={styles.featureDesc}>{feature.description}</p>
                             </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+
+            {/* How It Works */}
+            <section className={styles.howItWorks} id='how-it-works'>
+                <div className={styles.sectionInner}>
+                    <h2 className={styles.sectionTitle}>How It Works</h2>
+                    <p className={styles.sectionSub}>
+                        Three steps to turn your financial anxiety into a game you can win.
+                    </p>
+                    <div className={styles.steps}>
+                        {STEPS.map((step, i) => (
+                        <div key={i} className={styles.step}>
+                            <div className={styles.stepNumber}>{step.number}</div>
+                            <div className={styles.stepContent}>
+                                <h3 className={styles.stepTitle}>{step.title}</h3>
+                                <p className={styles.stepDesc}>{step.description}</p>
+                            </div>
+                            {i < STEPS.length - 1 && (
+                            <div className={styles.stepArrow}>→</div>
+                            )}
+                        </div>
                         ))}
                     </div>
                 </div>
