@@ -9,9 +9,9 @@ datasource db {
 
 model User {
   id           Int       @id @default(autoincrement())
+  clerkId      String    @unique
   email        String    @unique
   username     String    @unique
-  passwordHash String
   createdAt    DateTime  @default(now())
   debts        Debt[]
 }
@@ -26,7 +26,7 @@ model Debt {
   interestRate   Float
   minimumPayment Float
   createdAt      DateTime  @default(now())
-  user           User      @relation(fields: [userId], references: [id])
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   payments       Payment[]
 }
 
@@ -36,7 +36,7 @@ model Payment {
   amount Float
   note   String?
   paidAt DateTime @default(now())
-  debt   Debt     @relation(fields: [debtId], references: [id])
+  debt   Debt     @relation(fields: [debtId], references: [id], onDelete: Cascade)
 }
 
 enum DebtType {
