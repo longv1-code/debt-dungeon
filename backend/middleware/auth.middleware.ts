@@ -1,19 +1,12 @@
-import { verifyToken } from '../utils/jwt.utils'
+import { clerkMiddleware, getAuth } from '@clerk/express'
 
-export const protect = (req, res, next) => { // checks every protected route
-    const authHeader = req.headers.authorization
+export const clerkAuth = clerkMiddleware()
 
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        return res.status(401).json({ message: 'Not authorized, no token' })
+export const protect = (req: any, res: any, next: any) => {
+    const auth = getAuth(req)
+    if (!auth.userId) {
+        return res.status(401).json({ message: 'Not authorized, no valid session' })
     }
-
-    const token = authHeader.split(' ')[1]
-
-    try {
-        const decoded = verifyToken(token)
-        req.user = decoded
-        next() // valid token, can access
-    } catch (err) {
-        return res.status(401).json({ message: 'Not authorized, invalid token '})
-    }
+    req.auth = auth
+    next()
 }
