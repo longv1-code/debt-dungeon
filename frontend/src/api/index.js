@@ -4,22 +4,25 @@ const api = axios.create({
     baseURL: 'http://127.0.0.1:3001/api',
 })
 
-// Automatically attach JWT token to every request
-api.interceptors.request.use((config) => { // runs before every ongoing request
-    const token = localStorage.getItem('token')
+let getTokenFn = null
+export const setTokenGetter = (fn) => {
+    getTokenFn = fn
+}
 
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`
+api.interceptors.request.use(async (config) => {
+    if (getTokenFn) {
+        const token = await getTokenFn()
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`
+        }
     }
     return config
 })
 
-// Handle auth errors globally
-api.interceptors.response.use( // runs after every response comes back
+api.interceptors.response.use(
     (response) => response,
     (error) => {
-        if (error.response?.status === 401) { // if token expired / invalid
-            localStorage.removeItem('token')
+        if (error.response?.status === 401) {
             window.location.href = '/auth'
         }
         return Promise.reject(error)

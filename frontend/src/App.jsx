@@ -1,4 +1,7 @@
+import { useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { useAuth } from '@clerk/clerk-react'
+import { setTokenGetter } from './api/index'
 import ProtectedRoute from './components/layout/ProtectedRoute'
 import AuthPage from './pages/Auth.page'
 import DashboardPage from './pages/Dashboard.page'
@@ -7,6 +10,12 @@ import StatsPage from './pages/Stats.page'
 import LandingPage from './pages/Landing.page'
 
 function App() {
+  const { getToken } = useAuth()
+
+  useEffect(() => {
+    setTokenGetter(getToken)
+  }, [getToken])
+
   return (
     <BrowserRouter>
       <Routes>
