@@ -1,7 +1,6 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
-import authRoutes from './routes/auth.routes'
 import debtRoutes from './routes/debts.routes'
 import statsRoutes from './routes/stats.routes'
 import webhooksRouter from './routes/webhooks.routes'
@@ -21,7 +20,6 @@ app.use(express.json())
 app.use(clerkAuth)
 
 // Routes
-app.use('/api/auth', authRoutes)
 app.use('/api/debts', debtRoutes)
 app.use('/api/stats', statsRoutes)
 
