@@ -1,11 +1,17 @@
 import { Navigate } from 'react-router-dom'
-import useAuthStore from '../../store/auth.store'
+import { useAuth } from '@clerk/clerk-react'
 import { ROUTES } from '../../constants/routes.constants'
+import LoadingSpinner from '../ui/LoadingSpinner'
 
 const ProtectedRoute = ({ children }) => {
-    const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
+    const { isLoaded, isSignedIn } = useAuth()
+    console.log('ProtectedRoute check:', { isLoaded, isSignedIn })
 
-    if (!isAuthenticated) {
+    if (!isLoaded) {
+        return <LoadingSpinner />
+    }
+
+    if (!isSignedIn) {
         return <Navigate to={ROUTES.AUTH} replace />
     }
 
