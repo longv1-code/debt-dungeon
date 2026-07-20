@@ -10,6 +10,9 @@ const LandingNavbar = () => {
                     Debt Dungeon
                 </Link>
                 <div className={styles.actions}>
+                    <Link to={ROUTES.PRICING} className={styles.pricingBtn}>
+                        Pricing
+                    </Link>
                     <Link to={ROUTES.AUTH} className={styles.loginBtn}>
                         Login
                     </Link>
