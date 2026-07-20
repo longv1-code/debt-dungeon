@@ -5,7 +5,7 @@ import { ROUTES } from '../constants/routes.constants.js'
 import styles from './Auth.page.module.css'
 
 const AuthPage = () => {
-  const [mode, setMode] = useState('login') // 'login' | 'register' | 'verify'
+  const [mode, setMode] = useState('login') // 'login' | 'register' | 'verify' | 'mfa'
 
   // Form field state
   const [email, setEmail] = useState('')
@@ -39,6 +39,12 @@ const AuthPage = () => {
       if (result.status === 'complete') {
         await setActive({ session: result.createdSessionId })
         navigate(ROUTES.DASHBOARD)
+        return
+      }
+
+      if (result.status === 'needs_second_factor') {
+        await result.prepareSecondFactor({ strategy: 'email_code' })
+        setMode('mfa')
         return
       }
 
@@ -102,6 +108,29 @@ const AuthPage = () => {
     }
   }
 
+  const handleMfa = async () => {
+    setLoading(true)
+    setError(null)
+    try {
+      const result = await signIn.attemptSecondFactor({
+        strategy: 'email_code',
+        code,
+      })
+
+      if (result.status === 'complete') {
+        await setActive({ session: result.createdSessionId })
+        navigate(ROUTES.DASHBOARD)
+      } else {
+        setError('Verification incomplete. Please try again.')
+      }
+    } catch (err) {
+      console.error('MFA failed:', err)
+      setError(err.errors?.[0]?.message || 'Invalid code')
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.card}>
@@ -110,7 +139,7 @@ const AuthPage = () => {
           <p>Face your debts. Slay your bosses.</p>
         </div>
 
-        {mode !== 'verify' && (
+        {mode !== 'verify' && mode !== 'mfa' && (
           <div className={styles.tabs}>
             <button
               className={`${styles.tab} ${mode === 'login' ? styles.tabActive : ''}`}
@@ -208,6 +237,27 @@ const AuthPage = () => {
               {error && <div className={styles.error}>{error}</div>}
               <button className={styles.submitBtn} onClick={handleVerify} disabled={loading || !isSignUpLoaded}>
                 {loading ? 'Verifying...' : 'Confirm Code'}
+              </button>
+            </>
+          )}
+
+          {mode === 'mfa' && (
+            <>
+              <p className={styles.verifyHint}>
+                A verification code was sent to <strong>{email}</strong>. Enter it to complete sign-in.
+              </p>
+              <div className={styles.field}>
+                <label>Verification Code</label>
+                <input
+                  type='text'
+                  placeholder='123456'
+                  value={code}
+                  onChange={(e) => setCode(e.target.value)}
+                />
+              </div>
+              {error && <div className={styles.error}>{error}</div>}
+              <button className={styles.submitBtn} onClick={handleMfa} disabled={loading}>
+                {loading ? 'Verifying...' : 'Complete Sign In'}
               </button>
             </>
           )}

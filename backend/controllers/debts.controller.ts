@@ -51,6 +51,21 @@ export const getDebtById = async (req: any, res: any, next: any) => {
 export const createDebt = async (req: any, res: any, next: any) => {
   try {
     const userId = await getLocalUserId(req.auth.userId)
+
+    // Tier gating — Adventurers capped at 3 active bosses
+    const user = await prisma.user.findUnique({ where: { id: userId } })
+    if (user?.tier === 'ADVENTURER') {
+      const activeCount = await prisma.debt.count({
+        where: { userId, currentBalance: { gt: 0 } }
+      })
+      if (activeCount >= 3) {
+        return res.status(403).json({
+          message: 'Adventurers can only have 3 active bosses. Upgrade to Knight to unlock unlimited bosses.',
+          upgradeRequired: true
+        })
+      }
+    }
+
     const {
       name,
       type,
@@ -58,6 +73,7 @@ export const createDebt = async (req: any, res: any, next: any) => {
       interestRate,
       minimumPayment
     } = req.body
+
     const debt = await prisma.debt.create({
       data: {
         userId,
@@ -69,6 +85,7 @@ export const createDebt = async (req: any, res: any, next: any) => {
         minimumPayment
       }
     })
+    
     res.status(201).json(debt)
   } catch (err) {
     next(err)

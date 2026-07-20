@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { toast } from 'react-hot-toast'
 import Navbar from '../components/layout/Navbar'
 import BossCard from '../components/boss/BossCard'
@@ -8,14 +8,15 @@ import DealDamageModal from '../components/boss/DealDamageModal'
 import LoadingSpinner from '../components/ui/LoadingSpinner'
 import Button from '../components/ui/Button'
 import useDebts from '../hooks/useDebts'
-import useAuth from '../hooks/useAuth'
+import useUserProfile from '../hooks/useUserProfile'
 import { formatCurrency } from '../utils/currency.utils'
 import { preloadBossSpriteSet } from '../utils/spritePreload.utils'
+import { ROUTES } from '../constants/routes.constants'
 import styles from './Dashboard.page.module.css'
-import { useEffect } from 'react'
 
 const DashboardPage = () => {
   const { debts, loading, addDebt, removeDebt, logPayment } = useDebts()
+  const { profile } = useUserProfile()
 
   // Modal state
   // Controls whether AddDebtModal is visible
@@ -36,10 +37,37 @@ const DashboardPage = () => {
     preloadBossSpriteSet(debts.map((debt) => debt.type))
   }, [debts])
 
+  const handleSpawnBossClick = () => {
+    console.log('profile tier:', profile?.tier)
+    console.log('active count:', debts.filter(d => d.currentBalance > 0).length)
+    if (profile?.tier === 'ADVENTURER') {
+      const activeCount = debts.filter(d => d.currentBalance > 0).length
+      console.log('inside adventurer block, activeCount:', activeCount)
+      if (activeCount >= 3) {
+        console.log('showing toast')
+        toast.error('Boss limit reached! Upgrade to Knight for unlimited bosses.', {
+          duration: 4000,
+        })
+        return
+      }
+    }
+    setShowAddDebt(true)
+  }
+
   // Called by AddDebtModal with the form data when user hits Spawn Boss
   const handleAddDebt = async (debtData) => {
-    await addDebt(debtData)
-    toast.success('⚔️ New boss spawned!')
+    try {
+      await addDebt(debtData)
+      toast.success('⚔️ New boss spawned!')
+    } catch (err) {
+      console.log('handleAddDebt error:', err)
+      console.log('status:', err.response?.status)
+      if (err.response?.status === 403) {
+        toast.error('Boss limit reached! Upgrade to Knight for unlimited bosses.')
+      } else {
+        toast.error('Failed to spawn boss.')
+      }
+    }
   }
 
   // Called by DealDamageModal with debtId and { amount, note }
@@ -113,7 +141,7 @@ const DashboardPage = () => {
               <Button
                 variant='primary'
                 size='sm'
-                onClick={() => setShowAddDebt(true)}
+                onClick={handleSpawnBossClick}
               >
                 + Spawn Boss
               </Button>

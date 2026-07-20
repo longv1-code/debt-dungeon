@@ -1,13 +1,18 @@
+import { Link } from 'react-router-dom'
+import { Lock } from 'lucide-react'
 import useStats from '../hooks/useStats'
+import useUserProfile from '../hooks/useUserProfile'
 import Navbar from '../components/layout/Navbar'
 import LoadingSpinner from '../components/ui/LoadingSpinner'
 import DebtBreakdownChart from '../components/charts/DebtBreakdownChart'
 import PaymentHistoryChart from '../components/charts/PaymentHistoryChart'
 import { formatCurrency } from '../utils/currency.utils'
+import { ROUTES } from '../constants/routes.constants'
 import styles from './Stats.page.module.css'
 
 const StatsPage = () => {
     const { stats, loading, error } = useStats()
+    const { profile } = useUserProfile()
 
     if (loading) return <LoadingSpinner />
     if (error) return <div>{error}</div>
@@ -23,6 +28,8 @@ const StatsPage = () => {
         debtBreakdown, 
         paymentHistory 
     } = stats
+
+    const isKnight = profile?.tier === 'KNIGHT'
 
     return (
         <div className={styles.page}>
@@ -84,18 +91,32 @@ const StatsPage = () => {
                     </div>
                 </div>
 
-                {/* Charts */}
-                <div className={styles.chartsGrid}>
-                    <div className={styles.chartCard}>
-                        <h3>Debt Breakdown</h3>
-                        <DebtBreakdownChart debtBreakdown={debtBreakdown} />
+                {/* Charts -- Knights Only */}
+                {isKnight ? (
+                    <div className={styles.chartsGrid}>
+                        <div className={styles.chartCard}>
+                            <h3>Debt Breakdown</h3>
+                            <DebtBreakdownChart debtBreakdown={debtBreakdown} />
+                        </div>
+                        <div className={styles.chartCard}>
+                            <h3>Payment History</h3>
+                            <PaymentHistoryChart paymentHistory={paymentHistory} />
+                        </div>
                     </div>
-                    <div className={styles.chartCard}>
-                        <h3>Payment History</h3>
-                        <PaymentHistoryChart paymentHistory={paymentHistory} />
+                ) : (
+                    <div className={styles.lockedSection}>
+                        <div className={styles.lockedCard}>
+                            <Lock size={32} className={styles.lockIcon} />
+                            <h3 className={styles.lockedTitle}>Advanced Analytics</h3>
+                            <p className={styles.lockedText}>
+                                Debt breakdown charts and payment history graphs are available on the Knight tier.
+                            </p>
+                            <Link to={ROUTES.PRICING} className={styles.lockedBtn}>
+                                Upgrade to Knight — $5
+                            </Link>
+                        </div>
                     </div>
-                </div>
-
+                )}
             </main>
         </div>
     )

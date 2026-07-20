@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useAuth } from '@clerk/clerk-react'
+import { Toaster } from 'react-hot-toast'
 import { setTokenGetter } from './api/index'
 import ProtectedRoute from './components/layout/ProtectedRoute'
 import AuthPage from './pages/Auth.page'
@@ -19,6 +20,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <Toaster position='top-right' />
       <Routes>
         <Route path='/' element={<LandingPage />} />
         <Route path='/auth' element={<AuthPage />} />
