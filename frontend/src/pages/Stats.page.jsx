@@ -1,5 +1,4 @@
 import useStats from '../hooks/useStats'
-import useAuth from '../hooks/useAuth'
 import Navbar from '../components/layout/Navbar'
 import LoadingSpinner from '../components/ui/LoadingSpinner'
 import DebtBreakdownChart from '../components/charts/DebtBreakdownChart'
