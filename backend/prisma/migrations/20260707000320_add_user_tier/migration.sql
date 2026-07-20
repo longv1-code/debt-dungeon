@@ -1,0 +1,5 @@
+-- CreateEnum
+CREATE TYPE "Tier" AS ENUM ('ADVENTURER', 'KNIGHT');
+
+-- AlterTable
+ALTER TABLE "User" ADD COLUMN     "tier" "Tier" NOT NULL DEFAULT 'ADVENTURER';
