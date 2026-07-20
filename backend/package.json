@@ -25,6 +25,7 @@
     "jsonwebtoken": "^9.0.3",
     "pg": "^8.21.0",
     "prisma": "latest",
+    "stripe": "^22.3.0",
     "svix": "^1.96.0"
   },
   "devDependencies": {
