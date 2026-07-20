@@ -8,6 +8,7 @@ import DashboardPage from './pages/Dashboard.page'
 import BossDetailPage from './pages/BossDetail.page'
 import StatsPage from './pages/Stats.page'
 import LandingPage from './pages/Landing.page'
+import PricingPage from './pages/Pricing.page'
 
 function App() {
   const { getToken } = useAuth()
@@ -24,6 +25,7 @@ function App() {
         <Route path='/dashboard' element={
           <ProtectedRoute><DashboardPage /></ProtectedRoute>
         } />
+        <Route path='/pricing' element={<PricingPage />} />
         <Route path='/boss/:id' element={
           <ProtectedRoute><BossDetailPage /></ProtectedRoute>
         } />

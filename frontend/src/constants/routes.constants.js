@@ -1,7 +1,8 @@
 export const ROUTES = {
-    HONE:       '/',
+    HOME:       '/',
     AUTH:       '/auth',
     DASHBOARD:  '/dashboard',
+    PRICING:    '/pricing',
     BOSS:       (id) => `/boss/${id}`,
     STATS:      '/stats',
 }
