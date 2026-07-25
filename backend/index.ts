@@ -20,7 +20,7 @@ app.use('/api/stripe/webhook', stripeWebhookRouter)
 
 // Middleware
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: ['http://localhost:5173', 'https://debt-dungeon.vercel.app'],
     credentials: true,
 }))
 
