@@ -4,10 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "tsx index.ts",
+    "build": "tsc --outDir dist --esModuleInterop --skipLibCheck",
     "dev": "nodemon --exec tsx index.ts",
+    "postinstall": "prisma generate",
     "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev"
+    "prisma:migrate": "prisma migrate deploy"
   },
   "keywords": [],
   "author": "",
@@ -26,13 +28,13 @@
     "pg": "^8.21.0",
     "prisma": "latest",
     "stripe": "^22.3.0",
-    "svix": "^1.96.0"
+    "svix": "^1.96.0",
+    "tsx": "^4.22.4"
   },
   "devDependencies": {
     "@types/node": "^25.9.1",
     "nodemon": "^3.1.14",
     "ts-node": "^10.9.2",
-    "tsx": "^4.22.4",
     "typescript": "^6.0.3"
   }
 }
